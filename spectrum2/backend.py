@@ -302,7 +302,9 @@ class Backend(asyncio.Protocol):
                                          payload.buddyName,
                                          payload.message,
                                          payload.xhtml,
-                                         payload.id)
+                                         payload.id,
+                                         payload.pm,
+                                         payload.carbon)
 
     def handle_conv_message_ack_payload(self, data):
         payload = spb2.ConversationMessage()
@@ -554,7 +556,7 @@ class Backend(asyncio.Protocol):
         raise NotImplementedError()
 
     def handle_message_send_request(self, user, legacy_name, message,
-                                    xhtml='', mid=0):
+                                    xhtml='', mid=0, pm=False, carbon=False):
         """
         Called when XMPP user sends message to legacy network.
         @param user: XMPP JID of user for which this event occurs.
@@ -562,6 +564,8 @@ class Backend(asyncio.Protocol):
         @param message: Plain text message.
         @param xhtml: XHTML message.
         @param mid: message ID
+        @param pm: is this a private message?
+        @param carbon: is this only a carbon copy?
         """
 
         raise NotImplementedError()
