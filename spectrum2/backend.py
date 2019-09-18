@@ -51,7 +51,7 @@ class Backend(asyncio.Protocol):
         self.transport.write(header + data)
 
     def handle_message(self, user, legacy_name, message, nickname='', xhtml='',
-                       timestamp=''):
+                       timestamp='', pm=False, carbon=False):
         m = spb2.ConversationMessage()
         m.userName = user
         m.buddyName = legacy_name
@@ -59,6 +59,8 @@ class Backend(asyncio.Protocol):
         m.nickname = nickname
         m.xhtml = xhtml
         m.timestamp = str(timestamp)
+        m.pm = pm
+        m.carbon = carbon
 
         self.send_wrapped(m.SerializeToString(),
                           wm.TYPE_CONV_MESSAGE)
